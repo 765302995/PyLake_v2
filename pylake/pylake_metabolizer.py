@@ -649,4 +649,14 @@ def k600_2_kGAS(k600,temperature,gas="O2"):
 
     kGAS	=	k600*(Sc600**-n)
     return(kGAS)
-
+def calculate_U10_base(wnd, wnd_z=1):
+    #Scale wind speed to standard U10 (10 meters) based on height of observations
+    #@Refrenece:Saucier, W. 2003. Principles of Meteorological Analysis. Dover Publications. New York. p433
+    #@usage 
+    # Used for timeseries data in a data.frame 
+    #wind.scale(ts.data, wnd.z)
+    
+    ## Used for raw numeric data
+    #wind.scale.base(wnd, wnd.z)
+    U10 = wnd * (10 / wnd_z)**(0.15)
+    return U10
