@@ -45,4 +45,5 @@ epilimnion, hypolimnion = pylake.metalimnion(temp, depth)
  Lake metabolizer is being implemented. 
 
  ## Warming
- pylake.pylake_metabolizer.o2_at_sat function output data is not exactly the same as the output data of R'LakeMetabolizer'
+ pylake.pylake_metabolizer.o2_at_sat function output data is not exactly the same as the output data of R'LakeMetabolizer'  beasuse def o2_at_sat(temp, baro=None, altitude=0, salinity=.2, model='garcia-benson'):
+ salinity = .2 is the default. if is freshwater, must change salinity parameter.
