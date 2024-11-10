@@ -660,7 +660,8 @@ def calculate_U10_base(wnd, wnd_z=1):
     #wind.scale.base(wnd, wnd.z)
     U10 = wnd * (10 / wnd_z)**(0.15)
     return U10
-def met_fun(wind_ms,wind_height,area,temp,zmix,do,do_pct_sat,delo18_o2, delo18_h2o  ):
+def met_fun(wind_ms,wind_height, temp,zmix,do,delo18_o2, delo18_h2o  ):
+    # def met_fun(wind_ms,wind_height,area,temp,zmix,do,do_pct_sat,delo18_o2, delo18_h2o  ):
     
     # # Extract columns
     # wind_ms = df['wind.ms']
@@ -674,15 +675,19 @@ def met_fun(wind_ms,wind_height,area,temp,zmix,do,do_pct_sat,delo18_o2, delo18_h
     # delo18_h2o = df['delo18.h2o']
 
     # Calculate gas exchange coefficient for O2
-    u10 = wind_ms * (1 + ((0.0013 ** 0.5) / 0.41) * np.log(10 / wind_height))
-    k600cmh = 2.51 + 1.48 * u10 + 0.39 * u10 * np.log10(area)
-    k600md = k600cmh * 24 / 100
+    # u10 = wind_ms * (1 + ((0.0013 ** 0.5) / 0.41) * np.log(10 / wind_height))
+    u10 = calculate_U10_base(wind_ms, wind_height)
+    # k600cmh = 2.51 + 1.48 * u10 + 0.39 * u10 * np.log10(area)
+    # k600md = k600cmh * 24 / 100
+    k600md = pylake.k_cole(u10)
     sco2 = 1800.6 - (120.1 * temp) + (3.7818 * (temp ** 2)) - (0.047608 * (temp ** 3))
     ko2md = k600md * (sco2 / 600) ** (-2 / 3)
     k_z = ko2md / zmix
 
     # Calculate atom fractions for input into mass balance
-    dosat = do * 100 / do_pct_sat
+    # dosat = do * 100 / do_pct_sat
+    dosat_2 =pylake.o2_at_sat(temp, baro=None, altitude=0, salinity=0, model='garcia-benson')
+
     ro18o2 = ((delo18_o2 / 1000) * 0.0020052) + 0.0020052
     ro18h2o = ((delo18_h2o / 1000) * 0.0020052) + 0.0020052
     ro18air = ((23.88 / 1000) * 0.0020052) + 0.0020052
