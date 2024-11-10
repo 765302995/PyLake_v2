@@ -686,7 +686,7 @@ def met_fun(wind_ms,wind_height, temp,zmix,do,delo18_o2, delo18_h2o  ):
 
     # Calculate atom fractions for input into mass balance
     # dosat = do * 100 / do_pct_sat
-    dosat_2 =pylake.o2_at_sat(temp, baro=None, altitude=0, salinity=0, model='garcia-benson')
+    dosat =pylake.o2_at_sat(temp, baro=None, altitude=0, salinity=0, model='garcia-benson')
 
     ro18o2 = ((delo18_o2 / 1000) * 0.0020052) + 0.0020052
     ro18h2o = ((delo18_h2o / 1000) * 0.0020052) + 0.0020052
