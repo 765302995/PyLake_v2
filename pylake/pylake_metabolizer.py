@@ -729,3 +729,6 @@ def met_fun(wind_ms,wind_height,area,temp,zmix,do,do_pct_sat,delo18_o2, delo18_h
         'g': g
     })
     return output
+def calculate_irr2par_base(sw, coeff=2.114):
+    par = sw * coeff
+    return par
